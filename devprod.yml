@@ -1,0 +1,24 @@
+---
+- name: dev server
+  hosts: dev
+  become: 'yes'
+  tasks:
+    - name: docker install
+      apt:
+        name: docker.io
+        state: present
+    - name: Dockerfile sending
+      copy:
+        src: Dockerfile
+        dest: /root/cont01/
+    - name: docker-cpmpose sending
+      copy:
+        src: docker-compose.yml
+        dest: /root/cont01/
+    - name: war sending
+      copy:
+        src: hello-1.0.war
+        dest: /root/cont01/
+    - name: "docker-compose up"
+      docker_compose:
+        project_src: /root/cont01/
